@@ -11,9 +11,9 @@ new_cluster_config = """
 """
 
 existing_cluster_id = '0414-075331-angle420'
-notebook_path = '/Repos/michael.shtelma@databricks.com/adults_census_cicd/integration_tests/test'
+notebook_path = '/Repos/michael.shtelma@databricks.com/tf_xray_images_cicd/integration_tests/test'
 cicd_repo_id="3060587884715710"
-prod_repo_id="3060587884717352"
+prod_repo_id="2147458529668839"
 
 # COMMAND ----------
 
