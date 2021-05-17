@@ -29,7 +29,7 @@ from pyspark.sql.functions import *
 import PIL.Image
 import numpy as np
 
-images_dir = '/mnt/databricks-datasets-private/ML/nih_xray/images/'
+images_dir = '/mnt/msh/datasets/nih-xray/images/images/'
 raw_image_df = spark.read.format("image").load(images_dir)
 
 display(raw_image_df)
@@ -92,7 +92,7 @@ from pyspark.sql.functions import *
 
 raw_metadata_df = spark.read.\
     option("header", True).option("inferSchema", True).\
-    csv("/mnt/databricks-datasets-private/ML/nih_xray/metadata/").\
+    csv("/mnt/msh/datasets/nih-xray/metadata/").\
     select("Image Index", "Finding Labels")
 
 distinct_findings = sorted([
@@ -129,6 +129,11 @@ display(combined_df)
 # COMMAND ----------
 
 combined_df.write.format("delta").save("/Users/msh/nihxray/nih_xray.delta", mode="overwrite")
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC optimize delta.`/Users/msh/nihxray/nih_xray.delta`
 
 # COMMAND ----------
 
