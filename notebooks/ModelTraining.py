@@ -1,4 +1,8 @@
 # Databricks notebook source
+
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC # Configuration
 
@@ -160,6 +164,7 @@ def train_test(params):
         mlflow.log_param("fc2", params['fc2'])
         mlflow.log_param("fc3", params['fc3'])
         mlflow.log_param("l2", params['l2'])
+        mlflow.log_metric("my ", 1111)
 
         model = get_model(params)
 
@@ -208,8 +213,6 @@ def train_test(params):
               callbacks=callbacks
             )
 
-            # mlflow.log_metric("val_roc_auc_final", auc_mean)
-
             end_time = int(time.time())
             mlflow.log_metric("training_duration", (end_time-start_time))
 
@@ -220,7 +223,7 @@ def train_test(params):
 
 # DBTITLE 1,Parameters
 params = {
-    'exp_name': 'anomaly-detection-01',
+    'exp_name': 'train-01',
   
     'number_of_epochs': 1,
     'batch_size':64,
@@ -249,12 +252,6 @@ params = {
 # COMMAND ----------
 
 from  mlflow.tracking import MlflowClient
-
-#experimentPath = f"/Users/bernhard.walter@databricks.com/experiments/{params['exp_name']}"
-#mlflow.set_experiment(experimentPath)
-#experimentID = MlflowClient().get_experiment_by_name(experimentPath).experiment_id
-#print(experimentID)
-
 train_test(params)
 
 # COMMAND ----------

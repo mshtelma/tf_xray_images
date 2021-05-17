@@ -26,7 +26,7 @@ def parse_image(img):
   
 @pandas_udf(ArrayType(FloatType()), PandasUDFType.SCALAR_ITER)
 def predict_batch_udf(image_batch_iter):  
-  batch_size = 96
+  batch_size = 64
   model = mlflow.keras.load_model('models:/{}/{}'.format(model_name, 'Production'))
   for image_batch in image_batch_iter:
     dataset = tf.data.Dataset.from_tensor_slices(image_batch)
@@ -34,6 +34,10 @@ def predict_batch_udf(image_batch_iter):
     preds = model.predict(dataset)
     yield pd.Series(list(preds))
 
-df = spark.read.format("delta").load("/Users/msh/nihxray/nih_xray.delta").sample(0.01)
+df = spark.read.format("delta").load("/Users/msh/nihxray/nih_xray.delta").sample(0.001)
 predictions_df = df.select(col('image'), predict_batch_udf(col("image")).alias("prediction"))
 display(predictions_df)
+
+# COMMAND ----------
+
+

@@ -128,7 +128,7 @@ display(combined_df)
 
 # COMMAND ----------
 
-combined_df.write.format("delta").save("/Users/msh/nihxray/nih_xray.delta", mode="overwrite")
+combined_df.write.format("delta").save("/Users/msh/nihxray/nih_xray.delta", mode="append")
 
 # COMMAND ----------
 
